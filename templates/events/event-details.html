@@ -1,0 +1,28 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ event.title }}</h2>
+    <p><strong>Date:</strong> {{ event.date|date:"F j, Y H:i" }}</p>
+    <p><strong>Location:</strong> {{ event.location }}</p>
+    <p><strong>Description:</strong> {{ event.description }}</p>
+
+    {% if event.image %}
+        <img src="{{ event.image.url }}" class="img-fluid my-3" alt="{{ event.title }}">
+    {% endif %}
+
+    <h5>Included Artworks:</h5>
+    <ul>
+        {% for artwork in event.artworks.all %}
+            <li><a href="{% url 'artwork-details' artwork.pk %}">{{ artwork.title }}</a></li>
+        {% empty %}
+            <li>No artworks added yet.</li>
+        {% endfor %}
+    </ul>
+
+    {% if request.user == event.created_by %}
+        <a href="{% url 'event-edit' event.pk %}" class="btn btn-warning btn-sm">Edit</a>
+        <a href="{% url 'event-delete' event.pk %}" class="btn btn-danger btn-sm">Delete</a>
+    {% endif %}
+</div>
+{% endblock %}

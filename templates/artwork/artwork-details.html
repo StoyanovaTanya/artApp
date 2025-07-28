@@ -1,0 +1,21 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ artwork.title }}</h2>
+    {% if artwork.image %}
+        <img src="{{ artwork.image.url }}" class="img-fluid mb-3 d-blok mx-auto" alt="{{ artwork.title }}">
+    {% endif %}
+
+    <p><strong>Description:</strong><br>{{ artwork.description }}</p>
+    <p><strong>Artist:</strong><br>{{ artwork.artist_name }}</p>
+    <p><strong>Created at:</strong><br>{{ artwork.created_at }}</p>
+
+    {% if user.is_authenticated and user == artwork.owner %}
+        <a href="{% url 'artwork-edit' artwork.pk %}" class="btn btn-warning">Edit</a>
+        <a href="{% url 'artwork-delete' artwork.pk %}" class="btn btn-danger">Delete</a>
+    {% endif %}
+    <a href="{% url 'artwork-list' %}" class="btn btn-secondary">Back</a>
+</div>
+    <br><br>
+{% endblock %}

@@ -1,0 +1,130 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f9f9f9;
+}
+
+.navbar-brand {
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.card {
+    border: none;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+.btn-primery {
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+}
+
+.btn-primery:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    margin-top: 60px;
+}
+
+ /* Общи стилове за всички форми */
+form {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-content label,
+form label {
+    font-weight: 600;
+    margin-top: 12px;
+}
+
+.form-content input[type="text"],
+.form-content input[type="email"],
+.form-content input[type="password"],
+.form-content input[type="file"],
+.form-content textarea,
+.form-content select,
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="file"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.form-content button,
+.form-content input[type="submit"],
+form button,
+form input[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.form-content button:hover,
+.form-content input[type="submit"]:hover,
+form button:hover,
+form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+
+.navbar {
+    font-weight: 500;
+    padding: 15px 0;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.navbar-nav .nav-link {
+    color: #333;
+    margin: 0 10px;
+    transition: color 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.logout-link:hover {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+    color: #007bff !important;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: #333;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline;
+}
+
+.logout-btn:hover {
+    color: #007bff;
+    text-decoration: none;
+}

@@ -1,0 +1,19 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Edit Event{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">✏️ Edit Event</h2>
+
+    <form method="post" enctype="multipart/form-data" class="mx-auto" style="max-width: 600px;">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'event-details' object.pk %}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-success">Save Changes</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

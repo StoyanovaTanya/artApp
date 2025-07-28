@@ -1,0 +1,31 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+{#        <a href="{% url 'artwork-create' %}" class="btn btn-success mb-3">Add New Artwork</a><br>#}
+        <h2>Artworks</h2>
+        <br>
+        {% if artworks %}
+            <div class="row">
+            {% for artwork in artworks %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        {% if artwork.image %}
+                        <img src="{{ artwork.image.url }}" class="card-img-top" alt="{{ artwork.title }}" style="height: 200px">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ artwork.title }}</h5>
+                            <p class="card-text">{{ artwork.description|truncatewords:10 }}</p>
+                            {% if artwork.pk %}
+                            <a href="{% url 'artwork-details' artwork.pk %}" class="btn btn-primary">Details</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p>No artworks available</p>
+        {% endif %}
+    </div>
+{% endblock %}
