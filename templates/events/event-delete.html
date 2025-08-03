@@ -5,8 +5,11 @@
     <h2>Are you sure you want to delete "{{ event.title }}"?</h2>
     <form method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Yes, Delete</button>
-        <a href="{% url 'event-details' event.pk %}" class="btn btn-secondary">Cancel</a>
+
+        <div class="form-buttons">
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a href="{% url 'event-details' event.pk %}" class="btn btn-secondary">Cancel</a>
+        </div>
     </form>
 </div>
 {% endblock %}

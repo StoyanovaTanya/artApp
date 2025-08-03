@@ -1,21 +1,22 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
 from django.http import HttpRequest, HttpResponseForbidden, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic as views
 from django.views.generic import DetailView, UpdateView
 
-from accounts.forms import UserEditForm
+from accounts.forms import UserEditForm, UserRegistrationForm, CustomLoginForm
 from artwork.models import Artwork
 
 UserModel = get_user_model()
 
 class RegisterView(views.CreateView):
-    form_class = UserCreationForm
-    template_name = 'accounts/register_page.html'
+    form_class = UserRegistrationForm
+    template_name = 'accounts/register-page.html'
     success_url = reverse_lazy('login')
 
 class ProfileDetailsView(LoginRequiredMixin, DetailView):
@@ -52,3 +53,17 @@ def app_user_delete_view(request: HttpRequest, pk: int) -> HttpResponse:
         return HttpResponseForbidden()
 
     return render(request, 'accounts/profile-delete-page.html')
+
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')  # or where you want to redirect after registration
+    else:
+        form = UserCreationForm()
+    return render(request, 'accounts/register-page.html', {'form': form})
+
+class CustomLoginView(LoginView):
+    template_name = 'accounts/login-page.html'
+    authentication_form = CustomLoginForm

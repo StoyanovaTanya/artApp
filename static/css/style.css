@@ -80,14 +80,6 @@ form input[type="submit"] {
     cursor: pointer;
 }
 
-.form-content button:hover,
-.form-content input[type="submit"]:hover,
-form button:hover,
-form input[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-
 .navbar {
     font-weight: 500;
     padding: 15px 0;
@@ -118,13 +110,30 @@ form input[type="submit"]:hover {
     padding: 0;
     margin: 0;
     font: inherit;
-    color: #333;
+    color: #000;
     cursor: pointer;
     text-decoration: none;
     display: inline;
 }
 
-.logout-btn:hover {
+.logout-btn-link:hover {
     color: #007bff;
     text-decoration: none;
+}
+
+.form-buttons .btn {
+    display: inline-block;
+    gap: 10px 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    line-height: 1.5;
+    text-align: center;
+    white-space: nowrap;
+    margin-top: auto;
+}
+
+form .checkbox label {
+    display: block;
+    margin-bottom: 0.5rem;
 }

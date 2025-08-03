@@ -2,16 +2,6 @@
 
 {% block content %}
 
-{#<div class="container mt-5">#}
-{##}
-{#    <h2>{{ user.username }}'s Profile</h2>#}
-{#    <p><strong>Email:</strong> {{ user.email }}</p>#}
-{#    <p><strong>First Name:</strong> {{ user.first_name }}</p>#}
-{#    <p><strong>Last Name:</strong> {{ user.last_name }}</p>#}
-{##}
-{#    <a href="{% url 'profile-edit' pk=user.pk %}" class="btn btn-warning">Edit Profile</a>#}
-{#    <a href="{% url 'profile-delete' pk=user.pk %}" class="btn btn-danger">Delete Profile</a>#}
-{#</div>#}
 <div class="container mt-4">
     <h2 class="mb-4 text-center">{{ profile.username }}'s Profile</h2>
     <p><strong>Email:</strong> {{ profile.email }}</p>
@@ -31,7 +21,7 @@
                 <div class="col">
                     <div class="card h-100 shadow-sm">
                         {% if artwork.image %}
-                            <img src="{{ artwork.image.url }}" class="card-img-top" alt="{{ artwork.title }}" style="height: 200px">
+                            <img src="{{ artwork.image.url }}" class="card-img-top" alt="{{ artwork.title }}" style="height: 35cap">
                         {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">{{ artwork.title }}</h5>

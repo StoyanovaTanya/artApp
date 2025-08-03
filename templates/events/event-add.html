@@ -1,12 +1,37 @@
 {% extends 'common/base.html' %}
 
+{% extends 'common/base.html' %}
+
 {% block content %}
 <div class="container mt-4">
-    <h2 class="mb-4 text-center">{% if form.instance.pk %}Edit Event{% else %}Create Event{% endif %}</h2>
+    <h2 class="text-center mb-4">Create Event</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Save</button>
+        {{ form.non_field_errors }}
+
+        {{ form.title.label_tag }} {{ form.title }}
+        {{ form.description.label_tag }} {{ form.description }}
+        {{ form.date.label_tag }} {{ form.date }}
+        {{ form.location.label_tag }} {{ form.location }}
+        {{ form.image.label_tag }} {{ form.image }}
+
+        <h5 class="mt-4">Select Artworks</h5>
+        <div class="row row-cols-2 row-cols-md-4 g-3">
+            {% for artwork in form.fields.artworks.queryset %}
+                <div class="col text-center">
+                    <label class="d-block">
+                        <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}" class="img-thumbnail mb-2" style="height: 150px; object-fit: cover;">
+                        <input type="checkbox" name="artworks" value="{{ artwork.id }}"
+                               {% if artwork in form.initial.artworks %}checked{% endif %}>
+                        <br>{{ artwork.title }}
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
     </form>
 </div>
 {% endblock %}

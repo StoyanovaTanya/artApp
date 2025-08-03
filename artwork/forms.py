@@ -6,7 +6,7 @@ from artwork.models import Artwork
 class ArtworkForm(forms.ModelForm):
     class Meta:
         model = Artwork
-        fields = ['title', 'description', 'image',]
+        fields = ['title', 'description', 'artist_name', 'image',]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
