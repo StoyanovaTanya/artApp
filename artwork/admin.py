@@ -10,3 +10,12 @@ class ArtworkAdmin(admin.ModelAdmin):
     list_filter = ('created_at', 'owner',)
     ordering = ('-created_at',)
     readonly_fields = ('created_at',)
+
+    fieldsets = (
+        ('Basic information', {
+            'fields': ('title', 'description', 'image')
+        }),
+        ('Additional data', {
+            'fields': ('owner', 'created_at'),
+        }),
+    )

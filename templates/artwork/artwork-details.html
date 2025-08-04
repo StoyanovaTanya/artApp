@@ -18,4 +18,27 @@
     <a href="{% url 'artwork-list' %}" class="btn btn-secondary">Back</a>
 </div>
     <br><br>
+    <h5 class="mt-4">Comments</h5>
+<div class="mb-3">
+    {% for comment in comments %}
+        <div class="border rounded p-2 mb-2">
+            <strong>{{ comment.user.username }}</strong> on {{ comment.created_at|date:"F j, Y H:i"}}<br>
+            {{ comment.content }}
+        </div>
+    {% empty %}
+        <p>No comments yet.</p>
+    {% endfor %}
+</div>
+
+<!-- Comment form -->
+{% if user.is_authenticated %}
+    <form method="post">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit" class="btn btn-primary">Add Comment</button>
+    </form>
+{% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to add a comment.</p>
+{% endif %}
+
 {% endblock %}

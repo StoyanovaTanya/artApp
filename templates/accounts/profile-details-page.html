@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container mt-4">
-    <h2 class="mb-4 text-center">{{ profile.username }}'s Profile</h2>
+    <h2 class="mb-4 text-center">{{ profile }}'s Profile</h2>
     <p><strong>Email:</strong> {{ profile.email }}</p>
 
     {% if request.user == profile %}

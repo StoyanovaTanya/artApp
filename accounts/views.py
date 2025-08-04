@@ -1,10 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.http import HttpRequest, HttpResponseForbidden, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic as views
 from django.views.generic import DetailView, UpdateView
@@ -67,3 +66,4 @@ def register(request):
 class CustomLoginView(LoginView):
     template_name = 'accounts/login-page.html'
     authentication_form = CustomLoginForm
+

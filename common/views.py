@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.views.generic import TemplateView
-
 from artwork.models import Artwork
+
 
 
 class HomeView(TemplateView):

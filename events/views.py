@@ -1,12 +1,15 @@
-
-
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.contenttypes.models import ContentType
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from common.forms import CommentForm
+from common.models import Comment
 from events.forms import EventForm
 from events.models import Event
+
 
 
 class EventListView(ListView):
@@ -24,6 +27,36 @@ class EventDetailView(DetailView):
     model = Event
     template_name = 'events/event-details.html'
     context_object_name = 'event'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        content_type = ContentType.objects.get_for_model(Event)
+        comments = Comment.objects.filter(
+            content_type=content_type,
+            object_id=self.object.id
+        ).order_by('-created_at')
+
+        context['comments'] = comments
+        context['comment_form'] = CommentForm()
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.content_object = self.object
+            comment.save()
+            return redirect('event-details', pk=self.object.pk)
+
+        # If the form is nort valid, return back with old values
+        context = self.get_context_data()
+        context['comment_form'] = form
+        return self.render_to_response(context)
+
 
 class EventCreateView(LoginRequiredMixin, CreateView):
     model = Event

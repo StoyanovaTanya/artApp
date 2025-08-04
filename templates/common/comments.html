@@ -1,0 +1,33 @@
+{% extends 'common/base.html' %}
+
+{% load form_tags %}
+
+{% block content %}
+
+<h4>Comments</h4>
+<div class="mb-3">
+    {% for comment in comments %}
+        <div class="border rounded p-2 mb-2 {% if comment.user == user %}bg-light{% endif %}">
+            <strong>{{ comment.user.username }}</strong>
+            <small class="text-muted">{{ comment.created_at|date:"d M Y H:i" }}</small>
+            <p>{{ comment.content }}</p>
+        </div>
+    {% empty %}
+        <p class="text-muted">No comments yet.</p>
+    {% endfor %}
+</div>
+
+{% if user.is_authenticated %}
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ comment_form.content.label_tag }}
+            {{ comment_form.content|add_class:"form-control" }}
+        </div>
+        <button type="submit" class="btn btn-primary">Post</button>
+    </form>
+{% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to post a comment.</p>
+{% endif %}
+
+{% endblock %}
