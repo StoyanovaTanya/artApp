@@ -49,4 +49,78 @@
     <p><a href="{% url 'login' %}">Log in</a> to add a comment.</p>
 {% endif %}
 
+<!-- Request form -->
+
+<hr>
+<h5>Participation</h5>
+
+{% if user.is_authenticated %}
+    <form method="post" class="mb-3">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="participation">
+        {# Покажи non-field errors #}
+        {% if participation_form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ participation_form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="mb-2">
+            {{ participation_form.message.label_tag }}
+            {{ participation_form.message }}
+            {% if participation_form.message.errors %}
+                <div class="text-danger small">
+                    {{ participation_form.message.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Join Event</button>
+        </div>
+    </form>
+{% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to request participation.</p>
+{% endif %}
+
+{% if user.is_staff or user == event.created_by %}
+    <h6 class="mt-4">Participation requests</h6>
+    {% if requests %}
+        <ul class="list-group">
+            {% for r in requests %}
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div>
+                        <strong>{{ r.user.username }}</strong>
+                        <div class="small text-muted">{{ r.created_at|date:"F j, Y H:i" }}</div>
+                        <div>{{ r.message|default:"—" }}</div>
+                    </div>
+                    <div class="d-flex gap-2 align-items-center">
+                        <span class="badge
+                            {% if r.status == 'pending' %}bg-warning
+                            {% elif r.status == 'approved' %}bg-success
+                            {% elif r.status == 'rejected' %}bg-danger
+                            {% else %}bg-secondary{% endif %}">
+                            {{ r.get_status_display }}
+                        </span>
+
+                        {% if user == event.created_by or user.is_superuser %}
+                            <form method="post" action="{% url 'approve-request' event.pk r.pk %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-success">Approve</button>
+                            </form>
+
+                            <form method="post" action="{% url 'reject-request' event.pk r.pk %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Reject</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted">No participation requests yet.</p>
+    {% endif %}
+{% endif %}
+
 {% endblock %}

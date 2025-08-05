@@ -1,5 +1,5 @@
 from django import forms
-from events.models import Event
+from events.models import Event, EventParticipationRequest
 from artwork.models import Artwork
 
 
@@ -37,3 +37,11 @@ class EventForm(forms.ModelForm):
 
         if isinstance(self.fields['artworks'].widget, forms.CheckboxSelectMultiple):
             self.fields['artworks'].widget.attrs.pop('class', None)
+
+class EventParticipationForm(forms.ModelForm):
+    class Meta:
+        model = EventParticipationRequest
+        fields = ['message']
+        widgets = {
+            'message': forms.Textarea(attrs={'rows': 3, 'class': 'form-control', 'placeholder': 'Optional message to the organizer...'}),
+        }

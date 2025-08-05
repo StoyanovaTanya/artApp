@@ -11,4 +11,6 @@ urlpatterns = [
         path('edit/', views.EventUpdateView.as_view(), name='event-edit'),
         path('delete/', views.EventDeleteView.as_view(), name='event-delete'),
     ])),
+    path('<int:event_pk>/approve-request/<int:req_pk>/', views.approve_request, name='approve-request'),
+    path('<int:event_pk>/reject-request/<int:req_pk>/', views.reject_request, name='reject-request'),
 ]

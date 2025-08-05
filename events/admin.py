@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from events.models import Event
+from events.models import Event, EventParticipationRequest
 
 
 @admin.register(Event)
@@ -24,3 +24,10 @@ class EventsAdmin(admin.ModelAdmin):
         if not obj.pk:
             obj.created_by = request.user
         super().save_model(request, obj, form, change)
+
+@admin.register(EventParticipationRequest)
+class EventParticipationRequestAdmin(admin.ModelAdmin):
+    list_display = ('event', 'user', 'status', 'created_at')
+    list_filter = ('status', 'created_at', 'event')
+    search_fields = ('event__title', 'user__username', 'message')
+    ordering = ('-created_at',)
